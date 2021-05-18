@@ -1,4 +1,4 @@
-import 'package:projet_app_git/models/activity.model.dart';
+import 'package:projet_app_git/models/activity_model.dart';
 
 List<Activity> activities = [
   Activity(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/activity.model.dart';
+import '../../../models/activity_model.dart';
 
 class ActivityCard extends StatelessWidget {
   final Activity activity;
@@ -9,19 +9,11 @@ class ActivityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundImage: AssetImage(activity.image),
-        ),
-        title: Text(activity.name),
-        subtitle: Text(activity.city),
-        trailing: Checkbox(
-          value: false,
-          tristate: false,
-          onChanged: (value) {},
-        ),
-      ),
+    return Container(
+      width: double.infinity,
+      height: 150,
+      margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      child: Image.asset(activity.image, fit: BoxFit.cover),
     );
   }
 }
