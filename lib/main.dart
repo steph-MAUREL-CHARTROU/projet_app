@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projet_app/views/city/widgets/city.dart';
+import 'views/city/city.dart';
 // import 'views/home/home.dart';
 
 main() {
