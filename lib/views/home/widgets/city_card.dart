@@ -25,12 +25,16 @@ class CityCard extends StatelessWidget {
             Positioned(
               top: 10,
               left: 10,
-              child: Text(
-                city.name,
-                style: TextStyle(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                color: Colors.black54,
+                child: Text(
+                  city.name,
+                  style: TextStyle(
                     fontSize: 35,
                     color: Colors.white,
-                    backgroundColor: Colors.black54),
+                  ),
+                ),
               ),
             )
           ],
