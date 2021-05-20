@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projet_app_git/models/city_model.dart';
 import 'package:projet_app_git/models/trip_model.dart';
 import 'package:projet_app_git/views/city/widgets/activity_list.dart';
 import 'package:projet_app_git/views/city/widgets/trip_activity_list.dart';
@@ -8,6 +9,9 @@ import '../../datas/data.dart' as data;
 
 class CityView extends StatefulWidget {
   final List<Activity> activities = data.activities;
+  final City city;
+
+  CityView({this.city});
 
   _CityState createState() => _CityState();
 }
@@ -21,6 +25,12 @@ class _CityState extends State<CityView> {
     super.initState();
     mytrip = Trip(activities: [], city: 'Belfast', date: null);
     index = 0;
+  }
+
+  List<Activity> get tripActivities {
+    return widget.activities
+        .where((activity) => mytrip.activities.contains(activity.id))
+        .toList();
   }
 
   void setDate() {
@@ -62,6 +72,7 @@ class _CityState extends State<CityView> {
 
   @override
   Widget build(BuildContext context) {
+    final City city = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -78,6 +89,7 @@ class _CityState extends State<CityView> {
         child: Column(
           children: <Widget>[
             TripOverview(
+              cityName: widget.city.name,
               trip: mytrip,
               setDate: setDate,
             ),
@@ -88,7 +100,9 @@ class _CityState extends State<CityView> {
                       selectedActivities: mytrip.activities,
                       toggleActivity: toggleActivity,
                     )
-                  : TripActiviyList(),
+                  : TripActiviyList(
+                      activities: tripActivities,
+                    ),
             ),
           ],
         ),

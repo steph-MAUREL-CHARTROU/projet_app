@@ -21,7 +21,7 @@ class _HomeState extends State<HomeView> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.home),
-        title: Text('AppTrip'),
+        title: Text('PICK UP DONEGAL'),
         actions: <Widget>[Icon(Icons.more_vert)],
       ),
       body: Container(
