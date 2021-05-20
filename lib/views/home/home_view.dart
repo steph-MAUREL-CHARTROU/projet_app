@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projet_app_git/widgets/ask_modal.dart';
 import '../../models/city_model.dart';
 import 'widgets/city_card.dart';
 
@@ -16,6 +17,10 @@ class _HomeState extends State<HomeView> {
     City(name: 'Bushmills', image: 'assets/images/bushmills.jpg'),
   ];
 
+  openModal(context) {
+    askModal(context, 'want something ?');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +36,12 @@ class _HomeState extends State<HomeView> {
             children: <Widget>[
               ...cities.map((city) {
                 return CityCard(city: city);
-              })
+              }),
+              ElevatedButton(
+                  child: Text('modal'),
+                  onPressed: () {
+                    openModal(context);
+                  })
             ],
           )),
     );
