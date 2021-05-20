@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projet_app_git/models/trip_model.dart';
-import 'package:projet_app_git/views/city/widgets/activity_card.dart';
+import 'package:projet_app_git/views/city/widgets/activity_list.dart';
+import 'package:projet_app_git/views/city/widgets/trip_activity_list.dart';
 import 'package:projet_app_git/views/city/widgets/trip_overview.dart';
 import '../../models/activity_model.dart';
 import '../../datas/data.dart' as data;
@@ -12,7 +13,15 @@ class CityView extends StatefulWidget {
 }
 
 class _CityState extends State<CityView> {
-  Trip mytrip = Trip(activities: [], city: 'Belfast', date: DateTime.now());
+  Trip mytrip;
+  int index;
+
+  @override
+  void initState() {
+    super.initState();
+    mytrip = Trip(activities: [], city: 'Belfast', date: null);
+    index = 0;
+  }
 
   void setDate() {
     showDatePicker(
@@ -29,19 +38,21 @@ class _CityState extends State<CityView> {
     });
   }
 
-  // void switchIndex(newIndex) {
-  //   setState(() {
-  //     index = newIndex;
-  //   });
-  // }
+  void switchIndex(newIndex) {
+    setState(() {
+      index = newIndex;
+    });
+  }
 
-  // void toggleActivity(String id) {
-  //   setState(() {
-  //     mytrip.activities.contains(id)
-  //         ? mytrip.activities.remove(id)
-  //         : mytrip.activities.add(id);
-  //   });
-  // }
+  void toggleActivity(String id) {
+    setState(() {
+      mytrip.activities.contains(id)
+          ? mytrip.activities.remove(id)
+          : mytrip.activities.add(id);
+
+      print(mytrip.activities);
+    });
+  }
 
   void deleteTripActivity(String id) {
     setState(() {
@@ -71,19 +82,28 @@ class _CityState extends State<CityView> {
               setDate: setDate,
             ),
             Expanded(
-              child: GridView.count(
-                mainAxisSpacing: 1,
-                crossAxisSpacing: 1,
-                crossAxisCount: 2,
-                children: widget.activities
-                    .map((activity) => ActivityCard(
-                          activity: activity,
-                        ))
-                    .toList(),
-              ),
-            )
+              child: index == 0
+                  ? ActivityList(
+                      activities: widget.activities,
+                      selectedActivities: mytrip.activities,
+                      toggleActivity: toggleActivity,
+                    )
+                  : TripActiviyList(),
+            ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: index,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            label: ('Découverte'),
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.stars), label: ('Mes activités')),
+        ],
+        onTap: switchIndex,
       ),
     );
   }
