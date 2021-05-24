@@ -5,6 +5,7 @@ import 'package:projet_app_git/views/city/widgets/activity_list.dart';
 import 'package:projet_app_git/views/city/widgets/trip_activity_list.dart';
 import 'package:projet_app_git/views/city/widgets/trip_overview.dart';
 import 'package:projet_app_git/views/home/home_view.dart';
+import 'package:projet_app_git/widgets/donegal_drawer.dart';
 import '../../models/activity_model.dart';
 import '../../datas/data.dart' as data;
 
@@ -122,16 +123,9 @@ class _CityState extends State<CityView> {
     final City city = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(Icons.chevron_left),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
         title: Text('Organiser mon séjour'),
-        actions: <Widget>[
-          Icon(Icons.more_vert),
-        ],
       ),
+      drawer: DonagalDrawer(),
       body: Container(
         child: Column(
           children: <Widget>[

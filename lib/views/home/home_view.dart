@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projet_app_git/widgets/ask_modal.dart';
+import 'package:projet_app_git/widgets/donegal_drawer.dart';
 import '../../models/city_model.dart';
 import 'widgets/city_card.dart';
 
@@ -27,10 +28,9 @@ class _HomeState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.home),
-        title: Text('PICK UP DONEGAL'),
-        actions: <Widget>[Icon(Icons.more_vert)],
+        title: Text('Pick Up Donegal App'),
       ),
+      drawer: DonagalDrawer(),
       body: Container(
           padding: EdgeInsets.all(10.0),
           child: Column(
