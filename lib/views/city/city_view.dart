@@ -4,6 +4,7 @@ import 'package:projet_app_git/models/trip_model.dart';
 import 'package:projet_app_git/views/city/widgets/activity_list.dart';
 import 'package:projet_app_git/views/city/widgets/trip_activity_list.dart';
 import 'package:projet_app_git/views/city/widgets/trip_overview.dart';
+import 'package:projet_app_git/views/home/home_view.dart';
 import '../../models/activity_model.dart';
 import '../../datas/data.dart' as data;
 
@@ -31,6 +32,14 @@ class _CityState extends State<CityView> {
     return widget.activities
         .where((activity) => mytrip.activities.contains(activity.id))
         .toList();
+  }
+
+  double get amount {
+    return mytrip.activities.fold(0.0, (prev, element) {
+      var activity =
+          widget.activities.firstWhere((activity) => activity.id == element);
+      return prev + activity.price;
+    });
   }
 
   void setDate() {
@@ -70,6 +79,44 @@ class _CityState extends State<CityView> {
     });
   }
 
+  void saveTrip() async {
+    final result = await showDialog(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: Text(
+            'Voulez vous sauvegarder votre séléction ?',
+          ),
+          contentPadding: EdgeInsets.all(20),
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, 'cancel');
+                  },
+                  child: Text('Annuler'),
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, 'save');
+                  },
+                  child: Text('Sauvegarder'),
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
+    print(result);
+    Navigator.pushNamed(context, '/');
+  }
+
   @override
   Widget build(BuildContext context) {
     final City city = ModalRoute.of(context).settings.arguments;
@@ -92,6 +139,7 @@ class _CityState extends State<CityView> {
               cityName: widget.city.name,
               trip: mytrip,
               setDate: setDate,
+              amount: amount,
             ),
             Expanded(
               child: index == 0
@@ -106,6 +154,10 @@ class _CityState extends State<CityView> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.forward),
+        onPressed: saveTrip,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,

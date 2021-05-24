@@ -6,12 +6,14 @@ class TripOverview extends StatelessWidget {
   final Function setDate;
   final Trip trip;
   final String cityName;
+  final double amount;
 
-  double get amount {
-    return 0;
-  }
-
-  TripOverview({this.trip, this.setDate, this.cityName});
+  TripOverview({
+    this.trip,
+    this.setDate,
+    this.cityName,
+    this.amount,
+  });
 
   @override
   Widget build(BuildContext context) {

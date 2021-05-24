@@ -18,7 +18,9 @@ class _HomeState extends State<HomeView> {
   ];
 
   openModal(context) {
-    askModal(context, 'want something ?');
+    askModal(context, 'want something ?').then((result) {
+      print(result);
+    });
   }
 
   @override
