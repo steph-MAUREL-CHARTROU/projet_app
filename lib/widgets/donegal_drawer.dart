@@ -35,7 +35,9 @@ class DonagalDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.flight),
             title: Text('Mes voyages'),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/trips');
+            },
           )
         ],
       ),

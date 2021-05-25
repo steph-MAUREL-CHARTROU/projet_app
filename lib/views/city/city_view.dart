@@ -7,13 +7,17 @@ import 'package:projet_app_git/views/city/widgets/trip_overview.dart';
 import 'package:projet_app_git/views/home/home_view.dart';
 import 'package:projet_app_git/widgets/donegal_drawer.dart';
 import '../../models/activity_model.dart';
-import '../../datas/data.dart' as data;
 
 class CityView extends StatefulWidget {
-  final List<Activity> activities = data.activities;
+  static const String routeName = '/city';
   final City city;
+  final Function addTrip;
 
-  CityView({this.city});
+  List<Activity> get activities {
+    return city.activities;
+  }
+
+  CityView({this.city, this.addTrip});
 
   _CityState createState() => _CityState();
 }
@@ -115,7 +119,10 @@ class _CityState extends State<CityView> {
       },
     );
     print(result);
-    Navigator.pushNamed(context, '/');
+    if (result == 'save') {
+      widget.addTrip(mytrip);
+      Navigator.pushNamed(context, '/');
+    }
   }
 
   @override

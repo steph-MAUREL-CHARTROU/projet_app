@@ -5,6 +5,11 @@ import '../../models/city_model.dart';
 import 'widgets/city_card.dart';
 
 class HomeView extends StatefulWidget {
+  static const String routeName = '/';
+  final List<City> cities;
+
+  HomeView({this.cities});
+
   @override
   _HomeState createState() {
     return _HomeState();
@@ -12,12 +17,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeState extends State<HomeView> {
-  List cities = [
-    City(name: 'Belfast', image: 'assets/images/belfast.jpg'),
-    City(name: 'Ballycastle', image: 'assets/images/ballycastle.jpg'),
-    City(name: 'Bushmills', image: 'assets/images/bushmills.jpg'),
-  ];
-
   openModal(context) {
     askModal(context, 'want something ?').then((result) {
       print(result);
@@ -36,7 +35,7 @@ class _HomeState extends State<HomeView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              ...cities.map((city) {
+              ...widget.cities.map((city) {
                 return CityCard(city: city);
               }),
               ElevatedButton(

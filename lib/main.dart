@@ -1,34 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:projet_app_git/models/city_model.dart';
+import 'package:projet_app_git/models/trip_model.dart';
 import 'package:projet_app_git/views/city/city_view.dart';
 import 'views/home/home_view.dart';
 import 'package:projet_app_git/views/404/not_found.dart';
+import './datas/data.dart' as data;
+
+import 'views/trips/trips_view.dart';
 
 main() {
   runApp(AppTrip());
 }
 
-class AppTrip extends StatelessWidget {
+class AppTrip extends StatefulWidget {
+  final List<City> cities = data.cities;
+
+  @override
+  _AppTripState createState() => _AppTripState();
+}
+
+class _AppTripState extends State<AppTrip> {
+  List<Trip> trips = [];
+
+  void addTrip(Trip trip) {
+    setState(() {
+      trips.add(trip);
+    });
+    print(trips);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (context) {
-          return HomeView();
+          return HomeView(cities: widget.cities);
         },
         // '/city': (context) {
         //   return CityView();
         // }
       },
       onGenerateRoute: (settings) {
-        if (settings.name == '/city') {
-          final City city = settings.arguments;
-          return MaterialPageRoute(builder: (contexte) {
-            return CityView(
-              city: city,
-            );
-          });
+        switch (settings.name) {
+          case '/city':
+            {
+              return MaterialPageRoute(
+                builder: (contexte) {
+                  final City city = settings.arguments;
+                  return CityView(city: city, addTrip: addTrip);
+                },
+              );
+            }
+          case '/trips':
+            {
+              return MaterialPageRoute(builder: (contexte) {
+                return TripView();
+              });
+            }
         }
       },
       onUnknownRoute: (settings) {
