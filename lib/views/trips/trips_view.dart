@@ -16,13 +16,34 @@ class TripView extends StatefulWidget {
 class _TripViewState extends State<TripView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
         appBar: AppBar(
           title: Text('Mes voyages'),
+          bottom: TabBar(tabs: <Widget>[
+            Tab(
+              text: 'À venir',
+            ),
+            Tab(text: 'Passés'),
+          ]),
         ),
         drawer: DonagalDrawer(),
-        body: TripList(
-          trips: widget.trips,
-        ));
+        body: TabBarView(
+          children: <Widget>[
+            TripList(
+              trips: widget.trips
+                  .where((trip) => DateTime.now().isBefore(trip.date))
+                  .toList(),
+            ),
+            TripList(
+              trips: widget.trips
+                  .where((trip) => DateTime.now().isAfter(trip.date))
+                  .toList(),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -20,7 +20,20 @@ class AppTrip extends StatefulWidget {
 }
 
 class _AppTripState extends State<AppTrip> {
-  List<Trip> trips = [];
+  List<Trip> trips = [
+    Trip(
+        activities: [],
+        city: 'Belfast',
+        date: DateTime.now().add(Duration(days: 1))),
+    Trip(
+        activities: [],
+        city: 'Ballycastle',
+        date: DateTime.now().add(Duration(days: 2))),
+    Trip(
+        activities: [],
+        city: 'Bushmills',
+        date: DateTime.now().subtract(Duration(days: 2))),
+  ];
 
   void addTrip(Trip trip) {
     setState(() {
