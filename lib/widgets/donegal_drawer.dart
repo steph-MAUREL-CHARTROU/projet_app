@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DonagalDrawer extends StatelessWidget {
+  const DonagalDrawer();
   @override
   Widget build(BuildContext context) {
     return Drawer(

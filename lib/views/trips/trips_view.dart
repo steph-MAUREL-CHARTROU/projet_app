@@ -7,7 +7,7 @@ class TripView extends StatefulWidget {
   static const String routeName = ' /trips';
   final List<Trip> trips;
 
-  TripView({this.trips});
+  const TripView({this.trips});
 
   @override
   _TripViewState createState() => _TripViewState();
@@ -20,15 +20,15 @@ class _TripViewState extends State<TripView> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Mes voyages'),
-          bottom: TabBar(tabs: <Widget>[
-            Tab(
+          title: const Text('Mes voyages'),
+          bottom: const TabBar(tabs: <Widget>[
+            const Tab(
               text: 'À venir',
             ),
-            Tab(text: 'Passés'),
+            const Tab(text: 'Passés'),
           ]),
         ),
-        drawer: DonagalDrawer(),
+        drawer: const DonagalDrawer(),
         body: TabBarView(
           children: <Widget>[
             TripList(
