@@ -55,7 +55,7 @@ class _AppTripState extends State<AppTrip> {
           case '/trips':
             {
               return MaterialPageRoute(builder: (contexte) {
-                return TripView();
+                return TripView(trips: trips);
               });
             }
         }
