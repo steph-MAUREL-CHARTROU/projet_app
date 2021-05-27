@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:projet_app_git/models/activity_model.dart';
 
 class City {
@@ -5,8 +6,8 @@ class City {
   String name;
   List<Activity> activities;
   City({
-    this.image,
-    this.name,
-    this.activities,
+    @required this.image,
+    @required this.name,
+    @required this.activities,
   });
 }

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Activity {
   String name;
   String image;
@@ -5,5 +7,11 @@ class Activity {
   String city;
   double price;
 
-  Activity({this.name, this.city, this.id, this.image, this.price});
+  Activity({
+    @required this.name,
+    @required this.city,
+    @required this.id,
+    @required this.image,
+    @required this.price,
+  });
 }

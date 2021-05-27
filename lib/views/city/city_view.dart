@@ -29,21 +29,17 @@ class _CityState extends State<CityView> {
   @override
   void initState() {
     super.initState();
-    mytrip = Trip(activities: [], city: 'Belfast', date: null);
+    mytrip = Trip(
+      activities: [],
+      city: widget.city.name,
+      date: null,
+    );
     index = 0;
-  }
-
-  List<Activity> get tripActivities {
-    return widget.activities
-        .where((activity) => mytrip.activities.contains(activity.id))
-        .toList();
   }
 
   double get amount {
     return mytrip.activities.fold(0.0, (prev, element) {
-      var activity =
-          widget.activities.firstWhere((activity) => activity.id == element);
-      return prev + activity.price;
+      return prev + element.price;
     });
   }
 
@@ -68,19 +64,19 @@ class _CityState extends State<CityView> {
     });
   }
 
-  void toggleActivity(String id) {
+  void toggleActivity(Activity activity) {
     setState(() {
-      mytrip.activities.contains(id)
-          ? mytrip.activities.remove(id)
-          : mytrip.activities.add(id);
+      mytrip.activities.contains(activity)
+          ? mytrip.activities.remove(activity)
+          : mytrip.activities.add(activity);
 
       print(mytrip.activities);
     });
   }
 
-  void deleteTripActivity(String id) {
+  void deleteTripActivity(Activity activity) {
     setState(() {
-      mytrip.activities.remove(id);
+      mytrip.activities.remove(activity);
     });
   }
 
@@ -92,7 +88,7 @@ class _CityState extends State<CityView> {
           title: Text(
             'Voulez vous sauvegarder votre séléction ?',
           ),
-          contentPadding: EdgeInsets.all(20),
+          contentPadding: const EdgeInsets.all(20),
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -101,16 +97,16 @@ class _CityState extends State<CityView> {
                   onPressed: () {
                     Navigator.pop(context, 'cancel');
                   },
-                  child: Text('Annuler'),
+                  child: const Text('Annuler'),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 30,
                 ),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context, 'save');
                   },
-                  child: Text('Sauvegarder'),
+                  child: const Text('Sauvegarder'),
                 ),
               ],
             )
@@ -118,8 +114,23 @@ class _CityState extends State<CityView> {
         );
       },
     );
-    print(result);
-    if (result == 'save') {
+    if (mytrip.date == null) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('OOPS !'),
+              content: Text('Veuillez entrer une date'),
+              actions: <Widget>[
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('OK'))
+              ],
+            );
+          });
+    } else if (result == 'save') {
       widget.addTrip(mytrip);
       Navigator.pushNamed(context, '/');
     }
@@ -130,9 +141,9 @@ class _CityState extends State<CityView> {
     final City city = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Organiser mon séjour'),
+        title: const Text('Organiser mon séjour'),
       ),
-      drawer: DonagalDrawer(),
+      drawer: const DonagalDrawer(),
       body: Container(
         child: Column(
           children: <Widget>[
@@ -150,24 +161,24 @@ class _CityState extends State<CityView> {
                       toggleActivity: toggleActivity,
                     )
                   : TripActiviyList(
-                      activities: tripActivities,
+                      activities: mytrip.activities,
                     ),
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.forward),
+        child: const Icon(Icons.forward),
         onPressed: saveTrip,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
+          const BottomNavigationBarItem(
+            icon: const Icon(Icons.map),
             label: ('Découverte'),
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
               icon: Icon(Icons.stars), label: ('Mes activités')),
         ],
         onTap: switchIndex,

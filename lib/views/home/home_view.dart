@@ -27,11 +27,11 @@ class _HomeState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick Up Donegal App'),
+        title: const Text('Pick Up Donegal App'),
       ),
       drawer: DonagalDrawer(),
       body: Container(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
