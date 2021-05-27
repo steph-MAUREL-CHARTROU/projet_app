@@ -6,6 +6,7 @@ import 'views/home/home_view.dart';
 import 'package:projet_app_git/views/404/not_found.dart';
 import './datas/data.dart' as data;
 
+import 'views/trip/trip_view.dart';
 import 'views/trips/trips_view.dart';
 
 main() {
@@ -68,7 +69,21 @@ class _AppTripState extends State<AppTrip> {
           case '/trips':
             {
               return MaterialPageRoute(builder: (contexte) {
-                return TripView(trips: trips);
+                return TripsView(trips: trips);
+              });
+            }
+          case '/trip':
+            {
+              return MaterialPageRoute(builder: (context) {
+                String tripId =
+                    (settings.arguments as Map<String, String>)['tripId'];
+                String cityName =
+                    (settings.arguments as Map<String, String>)['cityName'];
+                return TripView(
+                  trip: trips.firstWhere((trip) => trip.id == tripId),
+                  city:
+                      widget.cities.firstWhere((city) => city.name == cityName),
+                );
               });
             }
         }

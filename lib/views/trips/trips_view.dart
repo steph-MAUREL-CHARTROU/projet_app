@@ -3,17 +3,17 @@ import 'package:projet_app_git/models/trip_model.dart';
 import 'package:projet_app_git/views/city/widgets/trip_list.dart';
 import 'package:projet_app_git/widgets/donegal_drawer.dart';
 
-class TripView extends StatefulWidget {
+class TripsView extends StatefulWidget {
   static const String routeName = ' /trips';
   final List<Trip> trips;
 
-  const TripView({this.trips});
+  const TripsView({this.trips});
 
   @override
-  _TripViewState createState() => _TripViewState();
+  _TripsViewState createState() => _TripsViewState();
 }
 
-class _TripViewState extends State<TripView> {
+class _TripsViewState extends State<TripsView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
