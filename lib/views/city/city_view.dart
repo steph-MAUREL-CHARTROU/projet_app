@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:projet_app_git/models/city_model.dart';
 import 'package:projet_app_git/models/trip_model.dart';
+import 'package:projet_app_git/providers/city_provider.dart';
 import 'package:projet_app_git/views/city/widgets/activity_list.dart';
 import 'package:projet_app_git/views/city/widgets/trip_activity_list.dart';
 import 'package:projet_app_git/views/city/widgets/trip_overview.dart';
 import 'package:projet_app_git/views/home/home_view.dart';
 import 'package:projet_app_git/widgets/donegal_drawer.dart';
+import 'package:provider/provider.dart';
 import '../../models/activity_model.dart';
 
 class CityView extends StatefulWidget {
   static const String routeName = '/city';
-  final City city;
-  final Function addTrip;
-
-  List<Activity> get activities {
-    return city.activities;
-  }
-
-  CityView({this.city, this.addTrip});
 
   _CityState createState() => _CityState();
 }
@@ -31,7 +25,7 @@ class _CityState extends State<CityView> {
     super.initState();
     mytrip = Trip(
       activities: [],
-      city: widget.city.name,
+      city: null,
       date: null,
     );
     index = 0;
@@ -80,7 +74,7 @@ class _CityState extends State<CityView> {
     });
   }
 
-  void saveTrip() async {
+  void saveTrip(String cityName) async {
     final result = await showDialog(
       context: context,
       builder: (context) {
@@ -131,14 +125,17 @@ class _CityState extends State<CityView> {
             );
           });
     } else if (result == 'save') {
-      widget.addTrip(mytrip);
+      // widget.addTrip(mytrip);
+      mytrip.city = cityName;
       Navigator.pushNamed(context, '/');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final City city = ModalRoute.of(context).settings.arguments;
+    String cityName = ModalRoute.of(context).settings.arguments;
+    City city =
+        Provider.of(context)<CityProvider>(context).getCityByName(cityName);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Organiser mon séjour'),
@@ -148,7 +145,7 @@ class _CityState extends State<CityView> {
         child: Column(
           children: <Widget>[
             TripOverview(
-              cityName: widget.city.name,
+              cityName: city.name,
               trip: mytrip,
               setDate: setDate,
               amount: amount,
@@ -156,7 +153,7 @@ class _CityState extends State<CityView> {
             Expanded(
               child: index == 0
                   ? ActivityList(
-                      activities: widget.activities,
+                      activities: city.activities,
                       selectedActivities: mytrip.activities,
                       toggleActivity: toggleActivity,
                     )
@@ -169,7 +166,9 @@ class _CityState extends State<CityView> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.forward),
-        onPressed: saveTrip,
+        onPressed: () {
+          saveTrip(city.name);
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,

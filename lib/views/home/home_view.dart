@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:projet_app_git/providers/city_provider.dart';
 import 'package:projet_app_git/widgets/ask_modal.dart';
 import 'package:projet_app_git/widgets/donegal_drawer.dart';
+import 'package:provider/provider.dart';
 import '../../models/city_model.dart';
 import 'widgets/city_card.dart';
 
 class HomeView extends StatefulWidget {
   static const String routeName = '/';
-  final List<City> cities;
-
-  HomeView({this.cities});
 
   @override
   _HomeState createState() {
@@ -25,26 +24,25 @@ class _HomeState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    List<City> cities = Provider.of<CityProvider>(context).cities;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pick Up Donegal App'),
       ),
       drawer: DonagalDrawer(),
       body: Container(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              ...widget.cities.map((city) {
-                return CityCard(city: city);
-              }),
-              ElevatedButton(
-                  child: Text('modal'),
-                  onPressed: () {
-                    openModal(context);
-                  })
-            ],
-          )),
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: cities.map(
+            (city) {
+              return CityCard(
+                city: city,
+              );
+            },
+          ).toList(),
+        ),
+      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:projet_app_git/models/activity_model.dart';
 import 'package:projet_app_git/models/city_model.dart';
+import 'package:projet_app_git/models/trip_model.dart';
 
 List<City> cities = [
   ////////////////////////////////////Belfast/////////////////////////////////////////////////
@@ -110,4 +111,18 @@ List<City> cities = [
       ),
     ],
   ),
+];
+List<Trip> trips = [
+  Trip(
+      activities: [],
+      city: 'Belfast',
+      date: DateTime.now().add(Duration(days: 1))),
+  Trip(
+      activities: [],
+      city: 'Ballycastle',
+      date: DateTime.now().add(Duration(days: 2))),
+  Trip(
+      activities: [],
+      city: 'Bushmills',
+      date: DateTime.now().subtract(Duration(days: 2))),
 ];
