@@ -39,50 +39,16 @@ class _AppTripState extends State<AppTrip> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
-          '/': (context) => HomeView(), '/city': (context) => CityView(),
-          // '/city': (context) {
-          //   return CityView();
-          // }
+          '/': (context) => HomeView(),
+          '/city': (context) => CityView(),
+          '/trips': (context) => TripsView(),
+          '/trip': (context) => TripView(),
         },
-        // onGenerateRoute: (settings) {
-        //   switch (settings.name) {
-        //     case '/city':
-        //       {
-        //         return MaterialPageRoute(
-        //           builder: (contexte) {
-        //             final City city = settings.arguments;
-        //             return CityView(city: city, addTrip: addTrip);
-        //           },
-        //         );
-        //       }
-        //     case '/trips':
-        //       {
-        //         return MaterialPageRoute(builder: (contexte) {
-        //           return TripsView(trips: trips);
-        //         });
-        //       }
-        //     case '/trip':
-        //       {
-        //         return MaterialPageRoute(builder: (context) {
-        //           String tripId =
-        //               (settings.arguments as Map<String, String>)['tripId'];
-        //           String cityName =
-        //               (settings.arguments as Map<String, String>)['cityName'];
-        //           return TripView(
-        //             trip: trips.firstWhere((trip) => trip.id == tripId),
-        //             city:
-        //                 widget.cities.firstWhere((city) => city.name == cityName),
-        //           );
-        //         });
-        //       }
-        //   }
-        // },
         onUnknownRoute: (settings) {
           return MaterialPageRoute(builder: (context) {
             return NotFound();
           });
         },
-        //home: City()
       ),
     );
   }

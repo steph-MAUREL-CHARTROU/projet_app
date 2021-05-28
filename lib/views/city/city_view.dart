@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projet_app_git/models/city_model.dart';
 import 'package:projet_app_git/models/trip_model.dart';
 import 'package:projet_app_git/providers/city_provider.dart';
+import 'package:projet_app_git/providers/trip_provider.dart';
 import 'package:projet_app_git/views/city/widgets/activity_list.dart';
 import 'package:projet_app_git/views/city/widgets/trip_activity_list.dart';
 import 'package:projet_app_git/views/city/widgets/trip_overview.dart';
@@ -127,6 +128,7 @@ class _CityState extends State<CityView> {
     } else if (result == 'save') {
       // widget.addTrip(mytrip);
       mytrip.city = cityName;
+      Provider.of<TripProvider>(context).addTrip(mytrip);
       Navigator.pushNamed(context, '/');
     }
   }

@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:projet_app_git/models/trip_model.dart';
+import 'package:projet_app_git/providers/trip_provider.dart';
 import 'package:projet_app_git/views/city/widgets/trip_list.dart';
 import 'package:projet_app_git/widgets/donegal_drawer.dart';
+import 'package:provider/provider.dart';
 
-class TripsView extends StatefulWidget {
-  static const String routeName = ' /trips';
-  final List<Trip> trips;
-
-  const TripsView({this.trips});
-
-  @override
-  _TripsViewState createState() => _TripsViewState();
-}
-
-class _TripsViewState extends State<TripsView> {
+class TripsView extends StatelessWidget {
+  //static const String routeName = '/trips';
   @override
   Widget build(BuildContext context) {
+    List<Trip> trips = Provider.of<TripProvider>(context).trips;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -32,12 +26,12 @@ class _TripsViewState extends State<TripsView> {
         body: TabBarView(
           children: <Widget>[
             TripList(
-              trips: widget.trips
+              trips: trips
                   .where((trip) => DateTime.now().isBefore(trip.date))
                   .toList(),
             ),
             TripList(
-              trips: widget.trips
+              trips: trips
                   .where((trip) => DateTime.now().isAfter(trip.date))
                   .toList(),
             ),
