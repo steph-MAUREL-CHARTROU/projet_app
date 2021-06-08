@@ -16,5 +16,6 @@ class Activity {
     @required this.id,
     @required this.image,
     @required this.price,
-  }) : status = ActivityStatus.ongoing;
+    this.status = ActivityStatus.ongoing,
+  });
 }

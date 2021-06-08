@@ -136,8 +136,7 @@ class _CityState extends State<CityView> {
   @override
   Widget build(BuildContext context) {
     String cityName = ModalRoute.of(context).settings.arguments;
-    City city =
-        Provider.of(context)<CityProvider>(context).getCityByName(cityName);
+    City city = Provider.of<CityProvider>(context).getCityByName(cityName);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Organiser mon séjour'),

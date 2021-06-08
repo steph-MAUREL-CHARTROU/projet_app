@@ -3,9 +3,9 @@ import 'package:projet_app_git/models/activity_model.dart';
 import 'package:projet_app_git/views/trip/widgets/trip_activtities_list.dart';
 
 class TripActivities extends StatelessWidget {
-  final List<Activity> activities;
+  final String tripId;
 
-  TripActivities({this.activities});
+  TripActivities({this.tripId});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,8 +32,14 @@ class TripActivities extends StatelessWidget {
               child: TabBarView(
                 physics: NeverScrollableScrollPhysics(),
                 children: <Widget>[
-                  TripActivitiesList(activities: activities),
-                  TripActivitiesList(activities: activities),
+                  TripActivitiesList(
+                    tripId: tripId,
+                    filter: ActivityStatus.ongoing,
+                  ),
+                  TripActivitiesList(
+                    tripId: tripId,
+                    filter: ActivityStatus.done,
+                  ),
                 ],
               ),
             )
