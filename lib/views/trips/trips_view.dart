@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projet_app_git/models/trip_model.dart';
 import 'package:projet_app_git/providers/trip_provider.dart';
 import 'package:projet_app_git/views/city/widgets/trip_list.dart';
+import 'package:projet_app_git/widgets/app_loader.dart';
 import 'package:projet_app_git/widgets/donegal_drawer.dart';
 import 'package:provider/provider.dart';
 
@@ -23,20 +24,22 @@ class TripsView extends StatelessWidget {
           ]),
         ),
         drawer: const DonagalDrawer(),
-        body: TabBarView(
-          children: <Widget>[
-            TripList(
-              trips: trips
-                  .where((trip) => DateTime.now().isBefore(trip.date))
-                  .toList(),
-            ),
-            TripList(
-              trips: trips
-                  .where((trip) => DateTime.now().isAfter(trip.date))
-                  .toList(),
-            ),
-          ],
-        ),
+        body: trips.length > 0
+            ? TabBarView(
+                children: <Widget>[
+                  TripList(
+                    trips: trips
+                        .where((trip) => DateTime.now().isBefore(trip.date))
+                        .toList(),
+                  ),
+                  TripList(
+                    trips: trips
+                        .where((trip) => DateTime.now().isAfter(trip.date))
+                        .toList(),
+                  ),
+                ],
+              )
+            : AppLoader(),
       ),
     );
   }

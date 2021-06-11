@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projet_app_git/providers/city_provider.dart';
-import 'package:projet_app_git/widgets/ask_modal.dart';
+import 'package:projet_app_git/widgets/app_loader.dart';
 import 'package:projet_app_git/widgets/donegal_drawer.dart';
 import 'package:provider/provider.dart';
 import '../../models/city_model.dart';
@@ -16,33 +16,34 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeState extends State<HomeView> {
-  openModal(context) {
-    askModal(context, 'want something ?').then((result) {
-      print(result);
-    });
+  CityProvider cp = new CityProvider();
+  List<City> cities = [];
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<City> cities = Provider.of<CityProvider>(context).cities;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pick Up Donegal App'),
-      ),
-      drawer: DonagalDrawer(),
-      body: Container(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: cities.map(
-            (city) {
-              return CityCard(
-                city: city,
-              );
-            },
-          ).toList(),
+        appBar: AppBar(
+          title: const Text('Pick Up Donegal App'),
         ),
-      ),
-    );
+        drawer: DonagalDrawer(),
+        body: Container(
+          padding: const EdgeInsets.all(10.0),
+          child: RefreshIndicator(
+            onRefresh: Provider.of<CityProvider>(context).fetchData,
+            child: cities.length > 0
+                ? ListView.builder(
+                    itemCount: cities.length,
+                    itemBuilder: (_, i) => CityCard(
+                      city: cities[i],
+                    ),
+                  )
+                : AppLoader(),
+          ),
+        ));
   }
 }

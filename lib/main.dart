@@ -22,9 +22,11 @@ class AppTrip extends StatefulWidget {
 
 class _AppTripState extends State<AppTrip> {
   final CityProvider cityProvider = CityProvider();
+  final TripProvider tripProvider = TripProvider();
   @override
   void initState() {
     cityProvider.fetchData();
+    tripProvider.fetchData();
     super.initState();
   }
 
